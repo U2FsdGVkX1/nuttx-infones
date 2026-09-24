@@ -1,0 +1,44 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config GAMES_INFONES
+	tristate "InfoNES emulator (framebuffer)"
+	default n
+	depends on VIDEO_FB && HAVE_CXX
+	---help---
+		InfoNES NES emulator using NuttX framebuffer, optional keyboard /
+		discrete joystick, and optional NuttX audio output. No board-specific
+		code is required; a .nes file must be accessible on the filesystem.
+
+if GAMES_INFONES
+
+config GAMES_INFONES_FBDEV
+	string "Framebuffer device"
+	default "/dev/fb0"
+
+config GAMES_INFONES_KBDDEV
+	string "Keyboard device (empty to disable)"
+	default "/dev/kbd0"
+	depends on INPUT_KEYBOARD && !INPUT_KEYBOARD_BYTESTREAM
+
+config GAMES_INFONES_CONSOLE
+	bool "Use the console terminal as a controller"
+	default y
+	---help---
+		Use W/S/A/D for directions, K/J for A/B, U/I for Select/Start,
+		and Q to quit.  Activated only if stdin is a terminal that
+		accepts raw mode; otherwise it is silently skipped.
+
+config GAMES_INFONES_JOYDEV
+	string "Discrete joystick device (empty to disable)"
+	default "/dev/djoy0"
+	depends on INPUT_DJOYSTICK
+
+config GAMES_INFONES_AUDIODEV
+	string "Audio output device (empty to disable)"
+	default "/dev/audio/pcm0p"
+	depends on AUDIO
+
+endif # GAMES_INFONES

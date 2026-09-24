@@ -1,0 +1,4 @@
+[submodule "core"]
+	path = core
+	url = https://github.com/jay-kumogata/InfoNES.git
+	ignore = untracked
